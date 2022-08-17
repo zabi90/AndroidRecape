@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
@@ -15,11 +16,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.androidrecape.databinding.ActivityLocationBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
+import com.google.android.gms.tasks.Task
 
 class LocationActivity : AppCompatActivity() {
-
+    val REQUEST_CHECK_SETTINGS = 121
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     lateinit var binding: ActivityLocationBinding
     @RequiresApi(Build.VERSION_CODES.M)
@@ -31,6 +33,7 @@ class LocationActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupClient();
         bindingClickListener()
+        createLocationRequest()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -96,6 +99,51 @@ class LocationActivity : AppCompatActivity() {
                 binding.locationTextView.text = "${location?.longitude} , ${location?.latitude}"
             }
     }
+
+    fun createLocationRequest() {
+        val locationRequest = LocationRequest.create().apply {
+            interval = 10000
+            fastestInterval = 5000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+        val builder = LocationSettingsRequest.Builder()
+            .addLocationRequest(locationRequest)
+
+        val client: SettingsClient = LocationServices.getSettingsClient(this)
+        val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
+
+        task.addOnSuccessListener { locationSettingsResponse ->
+            // All location settings are satisfied. The client can initialize
+            // location requests here.
+            // ...
+            Toast.makeText(this@LocationActivity, "Setting On", Toast.LENGTH_SHORT).show()
+
+        }
+
+        task.addOnFailureListener { exception ->
+            if (exception is ResolvableApiException){
+                // Location settings are not satisfied, but this can be fixed
+                // by showing the user a dialog.
+                try {
+                    // Show the dialog by calling startResolutionForResult(),
+                    // and check the result in onActivityResult().
+
+                    exception.startResolutionForResult(this@LocationActivity,
+                            REQUEST_CHECK_SETTINGS)
+                } catch (sendEx: IntentSender.SendIntentException) {
+                    // Ignore the error.
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQUEST_CHECK_SETTINGS && resultCode == RESULT_OK){
+            Toast.makeText(this@LocationActivity, "Setting On from result", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 
     companion object {
 
