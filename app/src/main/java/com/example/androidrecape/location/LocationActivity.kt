@@ -22,15 +22,14 @@ import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 
 class LocationActivity : AppCompatActivity() {
-    private var requestingLocationUpdates = false
-    private var isLocationPermissonAccess = false
     private val REQUEST_CHECK_SETTINGS = 121
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var locationRequest : LocationRequest
-    private lateinit var locationCallback: LocationCallback
 
     lateinit var binding: ActivityLocationBinding
+    private lateinit var locationManager: LocationManager
 
+
+
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,63 +37,29 @@ class LocationActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setupClient()
+
+
+        locationManager = LocationManager(this,lifecycle){
+            binding.locationTextView.text = "${it.latitude}, ${it.longitude}"
+        }
+        lifecycle.addObserver(locationManager)
+
         bindingClickListener()
         getLocationPermission()
-
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                locationResult ?: return
-                for (location in locationResult.locations){
-                    // Update UI with location data
-                    // ...
-
-                }
-
-                binding.locationTextView.text = "${locationResult.lastLocation.longitude} , ${locationResult.lastLocation.latitude}"
-            }
-        }
-    }
-    @RequiresApi(Build.VERSION_CODES.M)
-    override fun onResume() {
-        super.onResume()
-        if (requestingLocationUpdates) startLocationUpdates()
-    }
-    override fun onPause() {
-        super.onPause()
-        stopLocationUpdates()
     }
 
-    private fun stopLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
-    }
 
-    @RequiresApi(Build.VERSION_CODES.M)
-    private fun startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return
-        }
-        fusedLocationClient.requestLocationUpdates(locationRequest,
-                locationCallback,
-                Looper.getMainLooper())
-    }
     @RequiresApi(Build.VERSION_CODES.M)
     private fun bindingClickListener() {
+
         binding.buttonLastLocation.setOnClickListener {
-            if(isLocationPermissonAccess){
-                getLastLocation()
+            if(locationManager.isLocationPermissonAccess){
+                locationManager.getLastLocation()
             }
         }
 
         binding.locationUpdateButton.setOnClickListener {
-            if(isLocationPermissonAccess){
+            if(locationManager.isLocationPermissonAccess){
                 createLocationRequest()
             }
         }
@@ -108,7 +73,7 @@ class LocationActivity : AppCompatActivity() {
                     Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED -> {
                 // You can use the API that requires the permission.
-                isLocationPermissonAccess = true
+                locationManager.isLocationPermissonAccess = true
             }
             shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
                 // In an educational UI, explain to the user why your app requires this
@@ -139,7 +104,7 @@ class LocationActivity : AppCompatActivity() {
                 if (isGranted) {
                     // Permission is granted. Continue the action or workflow in your
                     // app.
-                    isLocationPermissonAccess = true
+                    locationManager.isLocationPermissonAccess = true
                 } else {
                     // Explain to the user that the feature is unavailable because the
                     // features requires a permission that the user has denied. At the
@@ -150,43 +115,22 @@ class LocationActivity : AppCompatActivity() {
             }
 
 
-    private fun setupClient() {
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-    }
 
-    @SuppressLint("MissingPermission")
-    private fun getLastLocation() {
-        fusedLocationClient.lastLocation
-                .addOnSuccessListener { location: Location? ->
-                    // Got last known location. In some rare situations this can be null.
-                    binding.locationTextView.text = "${location?.longitude} , ${location?.latitude}"
-                }
-    }
+
     @RequiresApi(Build.VERSION_CODES.M)
     private fun createLocationRequest() {
 
-         locationRequest = LocationRequest.create().apply {
-            interval = 10000
-            fastestInterval = 5000
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        }
-        val builder = LocationSettingsRequest.Builder()
-                .addLocationRequest(locationRequest)
-
-        val client: SettingsClient = LocationServices.getSettingsClient(this)
-        val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
-
-        task.addOnSuccessListener { locationSettingsResponse ->
+        locationManager.createLocationRequest()
+        locationManager.locationSettingTask.addOnSuccessListener { locationSettingsResponse ->
             // All location settings are satisfied. The client can initialize
             // location requests here.
             // ...
             Toast.makeText(this@LocationActivity, "Setting On", Toast.LENGTH_SHORT).show()
-            requestingLocationUpdates = true
-            startLocationUpdates()
-
+            locationManager.requestingLocationUpdates = true
+            locationManager.startLocationUpdates()
         }
 
-        task.addOnFailureListener { exception ->
+        locationManager.locationSettingTask.addOnFailureListener { exception ->
             if (exception is ResolvableApiException) {
                 // Location settings are not satisfied, but this can be fixed
                 // by showing the user a dialog.
@@ -198,7 +142,7 @@ class LocationActivity : AppCompatActivity() {
                             REQUEST_CHECK_SETTINGS)
                 } catch (sendEx: IntentSender.SendIntentException) {
                     // Ignore the error.
-                    requestingLocationUpdates = false
+                    locationManager.requestingLocationUpdates = false
                 }
             }
         }
@@ -208,8 +152,8 @@ class LocationActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CHECK_SETTINGS && resultCode == RESULT_OK) {
             Toast.makeText(this@LocationActivity, "Setting On from result", Toast.LENGTH_SHORT).show()
-            requestingLocationUpdates = true
-            startLocationUpdates()
+            locationManager.requestingLocationUpdates = true
+            locationManager.startLocationUpdates()
         }
     }
 
