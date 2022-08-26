@@ -2,6 +2,7 @@ package com.example.androidrecape
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.androidrecape.activities.UserFeedActivity
 import com.example.androidrecape.databinding.ActivityMainBinding
 import com.example.androidrecape.location.LocationActivity
 
@@ -23,5 +24,10 @@ class MainActivity : AppCompatActivity() {
         binding.locationExampleButton.setOnClickListener {
             startActivity(LocationActivity.getLaunchIntent(this))
         }
+        binding.viewmodelExampleButton.setOnClickListener {
+            startActivity(UserFeedActivity.getLaunchIntent(this))
+        }
     }
+
+
 }
