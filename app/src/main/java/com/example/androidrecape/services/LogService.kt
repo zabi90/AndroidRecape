@@ -6,6 +6,9 @@ import android.os.Handler
 import android.os.IBinder
 import android.widget.Toast
 
+/**
+ * Background service will be destroyed after one minutes.
+ */
 class LogService : Service() {
 
     override fun onBind(intent: Intent): IBinder? {
