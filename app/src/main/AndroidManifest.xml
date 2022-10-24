@@ -18,6 +18,19 @@
         android:theme="@style/Theme.AndroidRecape"
         tools:targetApi="31">
         <activity
+            android:name=".activities.ServiceExampleActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <service
+            android:name=".services.LogService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
             android:name=".activities.UserFeedActivity"
             android:exported="false" />
         <activity

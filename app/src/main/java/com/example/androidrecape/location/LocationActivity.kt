@@ -16,12 +16,13 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.androidrecape.activities.BaseActivity
 import com.example.androidrecape.databinding.ActivityLocationBinding
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 
-class LocationActivity : AppCompatActivity() {
+class LocationActivity : BaseActivity() {
     private val REQUEST_CHECK_SETTINGS = 121
 
     lateinit var binding: ActivityLocationBinding
@@ -36,9 +37,8 @@ class LocationActivity : AppCompatActivity() {
         binding = ActivityLocationBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
+        setupActionBar("Location Example", true)
         locationManager = LocationManager(this,lifecycle){
             binding.locationTextView.text = "${it.latitude}, ${it.longitude}"
         }

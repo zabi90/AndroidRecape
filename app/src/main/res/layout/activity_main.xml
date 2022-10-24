@@ -31,5 +31,10 @@
             android:layout_height="wrap_content"
             android:text="ViewModel Example" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/service_example_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Service Example" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.core.widget.NestedScrollView>
