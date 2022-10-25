@@ -34,6 +34,7 @@ class LocationManager(private val context: Context,
 
     override fun onCreate(owner: LifecycleOwner) {
         super.onCreate(owner)
+        //STEP : 1 Setup Client
         setupClient()
 
         locationCallback = object : LocationCallback() {
@@ -97,7 +98,7 @@ class LocationManager(private val context: Context,
     }
     @RequiresApi(Build.VERSION_CODES.M)
     fun createLocationRequest() {
-
+        //Step 2
         locationRequest = LocationRequest.create().apply {
             interval = 10000
             fastestInterval = 5000

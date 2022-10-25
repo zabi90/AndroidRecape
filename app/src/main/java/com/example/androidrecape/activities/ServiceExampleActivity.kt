@@ -13,6 +13,7 @@ import com.example.androidrecape.databinding.ActivityServiceExampleBinding
 import com.example.androidrecape.services.BoundService
 import com.example.androidrecape.services.ForegroundService
 import com.example.androidrecape.services.LogService
+import com.example.androidrecape.services.MyIntentService
 
 class ServiceExampleActivity : BaseActivity() {
 
@@ -52,6 +53,13 @@ class ServiceExampleActivity : BaseActivity() {
                 Intent(this,BoundService::class.java).also {
                     bindService(it,serviceConnection,Context.BIND_AUTO_CREATE)
                 }
+            }
+        }
+
+        binding.startIntentServiceButton.setOnClickListener {
+            Intent(this,MyIntentService::class.java).also {
+                it.putExtra("msg","Cool Service ")
+               ContextCompat.startForegroundService(this,it)
             }
         }
     }
