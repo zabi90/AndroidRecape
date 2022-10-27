@@ -1,5 +1,8 @@
 package com.example.androidrecape.activities
 
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.app.job.JobService
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -7,9 +10,11 @@ import android.content.ServiceConnection
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.androidrecape.databinding.ActivityServiceExampleBinding
+import com.example.androidrecape.schedulers.MyJobService
 import com.example.androidrecape.services.BoundService
 import com.example.androidrecape.services.ForegroundService
 import com.example.androidrecape.services.LogService
@@ -60,6 +65,24 @@ class ServiceExampleActivity : BaseActivity() {
             Intent(this,MyIntentService::class.java).also {
                 it.putExtra("msg","Cool Service ")
                ContextCompat.startForegroundService(this,it)
+            }
+        }
+
+        binding.startJobService.setOnClickListener {
+            val jobInfo = JobInfo.Builder(MyJobService.JOB_ID, ComponentName(this,MyJobService::class.java))
+            val job =   jobInfo.setRequiresCharging(true)
+                //.setMinimumLatency(1)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPeriodic(15*60*1000)
+                .build()
+
+            val jobScheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+            val result = jobScheduler.schedule(job)
+
+            if (result == JobScheduler.RESULT_SUCCESS){
+                Log.d(MyJobService.TAG,"Job scheduled successfully")
+            }else{
+                Log.d(MyJobService.TAG,"error while scheduled job")
             }
         }
     }

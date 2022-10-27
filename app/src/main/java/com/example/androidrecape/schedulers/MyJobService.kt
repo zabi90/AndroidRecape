@@ -27,7 +27,7 @@ class MyJobService : JobService() {
                 super.run()
 
                 for (i in 10 downTo 0){
-
+                    //explicity close this running thread
                     if(isJobCancelled){
                         return
                     }
@@ -44,7 +44,7 @@ class MyJobService : JobService() {
     }
 
     companion object{
-        private const val TAG = "MyJobService"
-        public const val JOB_ID = 31
+         const val TAG = "MyJobService"
+         const val JOB_ID = 31
     }
 }
