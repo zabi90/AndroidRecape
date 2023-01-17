@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.androidrecape">
-
     <!-- Always include this permission -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Include only if your app benefits from precise location access. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -19,13 +18,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidRecape"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.datastore.PreferenceDataStoreActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
         <service
             android:name=".schedulers.MyJobService"
             android:enabled="true"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            />
-
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".services.MyIntentService"
             android:enabled="true"

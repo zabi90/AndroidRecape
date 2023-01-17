@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.androidrecape.activities.ServiceExampleActivity
 import com.example.androidrecape.activities.UserFeedActivity
+import com.example.androidrecape.activities.datastore.PreferenceDataStoreActivity
 import com.example.androidrecape.databinding.ActivityMainBinding
 import com.example.androidrecape.location.LocationActivity
 
@@ -31,6 +32,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.serviceExampleButton.setOnClickListener {
             startActivity(ServiceExampleActivity.getLaunchIntent(this))
+        }
+
+        binding.dataStoreButton.setOnClickListener {
+            startActivity(PreferenceDataStoreActivity.getLaunchIntent(this))
         }
     }
 

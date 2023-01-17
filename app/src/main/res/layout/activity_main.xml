@@ -36,5 +36,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Service Example" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/data_store_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Data store" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.core.widget.NestedScrollView>
