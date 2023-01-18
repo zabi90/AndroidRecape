@@ -19,6 +19,9 @@
         android:theme="@style/Theme.AndroidRecape"
         tools:targetApi="31">
         <activity
+            android:name=".InternalFileStorageActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.datastore.PreferenceDataStoreActivity"
             android:exported="false">
             <meta-data
