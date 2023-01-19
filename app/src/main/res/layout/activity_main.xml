@@ -49,6 +49,11 @@
             android:layout_height="wrap_content"
             android:text="Internal File Handling" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/file_external_handling_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="External File Handling" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.core.widget.NestedScrollView>

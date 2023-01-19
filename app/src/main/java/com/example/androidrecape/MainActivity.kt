@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.androidrecape.activities.ServiceExampleActivity
 import com.example.androidrecape.activities.UserFeedActivity
+import com.example.androidrecape.activities.datastore.ExternalFileStorageActivity
 import com.example.androidrecape.activities.datastore.InternalFileStorageActivity
 import com.example.androidrecape.activities.datastore.PreferenceDataStoreActivity
 import com.example.androidrecape.databinding.ActivityMainBinding
@@ -22,8 +23,7 @@ class MainActivity : AppCompatActivity() {
         bindingClickListener()
     }
 
-    private fun bindingClickListener()
-    {
+    private fun bindingClickListener() {
         binding.locationExampleButton.setOnClickListener {
             startActivity(LocationActivity.getLaunchIntent(this))
         }
@@ -40,6 +40,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.fileInternalHandlingButton.setOnClickListener {
             startActivity(InternalFileStorageActivity.getLaunchIntent(this))
+        }
+
+        binding.fileExternalHandlingButton.setOnClickListener {
+            startActivity(ExternalFileStorageActivity.getLaunchIntent(this))
         }
     }
 
