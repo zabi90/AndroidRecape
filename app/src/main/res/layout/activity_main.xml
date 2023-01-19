@@ -43,5 +43,12 @@
             android:layout_height="wrap_content"
             android:text="Data store" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/file_internal_handling_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Internal File Handling" />
+
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.core.widget.NestedScrollView>

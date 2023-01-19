@@ -1,14 +1,17 @@
 package com.example.androidrecape.activities.datastore
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.androidrecape.activities.BaseActivity
 import com.example.androidrecape.databinding.ActivityInternalFileStorageBinding
 import java.io.*
 import java.nio.charset.StandardCharsets
 
-class InternalFileStorageActivity : AppCompatActivity() {
+class InternalFileStorageActivity : BaseActivity() {
 
     private lateinit var binding: ActivityInternalFileStorageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +19,7 @@ class InternalFileStorageActivity : AppCompatActivity() {
         binding = ActivityInternalFileStorageBinding.inflate(layoutInflater)
         // setContentView(R.layout.activity_internal_file_storage)
         setContentView(binding.root)
-
+        setupActionBar("Internal File Example", true)
         binding.saveButton.setOnClickListener {
 
             writeIntoFile(binding.textField.editText!!.text.toString())
@@ -78,24 +81,25 @@ class InternalFileStorageActivity : AppCompatActivity() {
 
         try {
             fileInputStream = openFileInput(FILE_NAME)
-            val inputStreamReader = InputStreamReader(fileInputStream, StandardCharsets.UTF_8)
-
-            val bufferedReader = BufferedReader(inputStreamReader)
-
+//            val inputStreamReader = InputStreamReader(fileInputStream, StandardCharsets.UTF_8)
+//
+//            val bufferedReader = BufferedReader(inputStreamReader)
+//
             val stringBuilder = StringBuilder()
-
-            var line: String = bufferedReader.readLine()
-
-            while (line != null) {
-                stringBuilder.append(line).append('\n');
-                line = bufferedReader.readLine()
-            }
-//            fileInputStream.bufferedReader().useLines { lines ->
-//                lines.fold("") { some, text ->
-//                    "$some\n$text"
-//                }
+//
+//            var line: String = bufferedReader.readLine()
+//
+//            while (line != null) {
+//                stringBuilder.append(line).append('\n');
+//                line = bufferedReader.readLine()
 //            }
-            binding.fileStatusTextView.text = line
+            fileInputStream.bufferedReader().useLines { lines ->
+                lines.fold("") { some, text ->
+
+                    stringBuilder.append( "$some\n$text").toString()
+                }
+            }
+            binding.fileStatusTextView.text = stringBuilder.toString()
 
         } catch (ex: FileNotFoundException) {
         } catch (ex: IOException) {
@@ -137,5 +141,9 @@ class InternalFileStorageActivity : AppCompatActivity() {
         const val CUSTOM_DIR = "custom_dir"
         const val FILE_NAME = "android_recape.txt"
         const val LOCAL_FILE_NAME = "android_recape.txt"
+
+        fun getLaunchIntent(context: Context): Intent {
+            return Intent(context, InternalFileStorageActivity::class.java)
+        }
     }
 }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.androidrecape.activities.ServiceExampleActivity
 import com.example.androidrecape.activities.UserFeedActivity
+import com.example.androidrecape.activities.datastore.InternalFileStorageActivity
 import com.example.androidrecape.activities.datastore.PreferenceDataStoreActivity
 import com.example.androidrecape.databinding.ActivityMainBinding
 import com.example.androidrecape.location.LocationActivity
@@ -36,6 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.dataStoreButton.setOnClickListener {
             startActivity(PreferenceDataStoreActivity.getLaunchIntent(this))
+        }
+        binding.fileInternalHandlingButton.setOnClickListener {
+            startActivity(InternalFileStorageActivity.getLaunchIntent(this))
         }
     }
 
