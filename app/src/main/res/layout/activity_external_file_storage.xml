@@ -4,8 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".activities.datastore.ExternalFileStorageActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Shared Photos"
+        android:textSize="22dp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shared_photo_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/create_dir_button"
@@ -14,4 +27,15 @@
         android:text="Create DIR"
         tools:layout_editor_absoluteX="7dp"
         tools:layout_editor_absoluteY="66dp" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/take_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Take Photo"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="66dp" />
+
+
 </androidx.appcompat.widget.LinearLayoutCompat>
