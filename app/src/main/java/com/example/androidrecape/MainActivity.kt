@@ -2,6 +2,7 @@ package com.example.androidrecape
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.androidrecape.activities.QoutesActivity
 import com.example.androidrecape.activities.ServiceExampleActivity
 import com.example.androidrecape.activities.UserFeedActivity
 import com.example.androidrecape.activities.datastore.ExternalFileStorageActivity
@@ -44,6 +45,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.fileExternalHandlingButton.setOnClickListener {
             startActivity(ExternalFileStorageActivity.getLaunchIntent(this))
+        }
+        binding.qouteButton.setOnClickListener {
+            startActivity(QoutesActivity.getLaunchIntent(this))
         }
     }
 
