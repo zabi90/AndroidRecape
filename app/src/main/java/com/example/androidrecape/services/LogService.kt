@@ -8,6 +8,7 @@ import android.widget.Toast
 
 /**
  * Background service will be destroyed after one minutes.
+ * in latest OS version if you take your app in background
  */
 class LogService : Service() {
 

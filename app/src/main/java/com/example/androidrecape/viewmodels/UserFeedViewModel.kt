@@ -17,7 +17,12 @@ class UserFeedViewModel : ViewModel() {
 
     fun loadUsers() {
         // Do an asynchronous operation to fetch users.
-       val usersList = listOf(User(name = "Zohaib", description = "This is cool "+Math.random()))
+       val usersList = listOf(
+           User(name = "Zohaib", description = "This is cool "+Math.random()),
+           User(name = "Zohaib2", description = "This is cool "+Math.random()),
+           User(name = "Zohaib2", description = "This is cool "+Math.random()),
+           User(name = "Zohaib2", description = "This is cool "+Math.random())
+       )
         users.value = usersList
     }
 }

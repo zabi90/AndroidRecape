@@ -23,11 +23,23 @@
         android:theme="@style/Theme.AndroidRecape"
         tools:targetApi="31">
         <activity
+            android:name=".activities.launchmodes.SingleTaskActivity"
+            android:exported="false"
+            android:launchMode="singleTask"
+            />
+        <activity
+            android:name=".activities.launchmodes.SingleTopActivity"
+            android:exported="false"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activities.launchmodes.LaunchModesActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.QoutesActivity"
             android:exported="false" />
         <activity
             android:name=".activities.datastore.ExternalFileStorageActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".activities.datastore.InternalFileStorageActivity"
             android:exported="false" />

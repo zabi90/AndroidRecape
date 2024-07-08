@@ -8,6 +8,7 @@ import com.example.androidrecape.activities.UserFeedActivity
 import com.example.androidrecape.activities.datastore.ExternalFileStorageActivity
 import com.example.androidrecape.activities.datastore.InternalFileStorageActivity
 import com.example.androidrecape.activities.datastore.PreferenceDataStoreActivity
+import com.example.androidrecape.activities.launchmodes.LaunchModesActivity
 import com.example.androidrecape.databinding.ActivityMainBinding
 import com.example.androidrecape.location.LocationActivity
 
@@ -48,6 +49,9 @@ class MainActivity : AppCompatActivity() {
         }
         binding.qouteButton.setOnClickListener {
             startActivity(QoutesActivity.getLaunchIntent(this))
+        }
+        binding.launchButton.setOnClickListener {
+            startActivity(LaunchModesActivity.getLaunchIntent(this))
         }
     }
 

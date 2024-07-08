@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.launchmodes.LaunchModesActivity">
+
+    <Button
+        android:id="@+id/standard_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Standard"
+        app:layout_constraintBottom_toTopOf="@+id/single_top_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/single_top_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Single Top"
+        app:layout_constraintBottom_toTopOf="@+id/single_task_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/standard_button" />
+
+    <Button
+        android:id="@+id/single_task_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Single Task"
+        app:layout_constraintBottom_toTopOf="@+id/single_instance_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_top_button" />
+
+    <Button
+        android:id="@+id/single_instance_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Single Instance"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_task_button" />
+</androidx.constraintlayout.widget.ConstraintLayout>
